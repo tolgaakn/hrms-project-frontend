@@ -2,37 +2,69 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.ui.main.container{
+  margin-top: 3em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.ui.selection.dropdown{
+  min-width: 12em !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.text-left{
+  text-align: left;
 }
 
-.App-link {
-  color: #61dafb;
+.font-size-header{
+  font-size: 20px !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.font-size-meta{
+  font-size: 15PX !important;
+}
+
+.font-color-black{
+  color: black !important;
+}
+
+.margin-top{
+  margin-top: 1em;
+}
+
+.margin-top-xxl{
+  margin-top: 14em !important;
+}
+
+.margin-bottom-md{
+  margin-bottom: 4em !important;
+}
+
+.margin-label{
+  margin: 6.33em 0 !important;
+}
+
+.padding-md{
+  padding: 2em;
+}
+
+.advert-img-radius{
+  border-radius: 7em;
+}
+
+.advert-margin{
+  margin: 25px 0;
+}
+
+.apply-button{
+  background: #00A8F3 !important;
+  color: white !important;
+}
+
+.margin-apply-button{
+  margin: 5.05em 0.5em !important;
+}
+
+.ui.fluid.card:hover {
+  -webkit-transform: scale(1.005);
+  transform: scale(1.005);
+  text-decoration: none;
 }
