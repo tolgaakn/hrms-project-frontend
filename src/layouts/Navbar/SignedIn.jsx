@@ -1,18 +1,36 @@
 import React from 'react'
-import { Dropdown, Image, Menu } from 'semantic-ui-react'
-
-export default function SignedIn() {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+    Button,
+    ButtonGroup,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    UncontrolledDropdown
+} from "reactstrap";
+export default function SignedIn({ signOut }) {
     return (
-        <div>
-            <Menu.Item>
-                <Image avatar spaced="right" src="https://upload.wikimedia.org/wikipedia/commons/6/6e/%C3%96rnek.jpg" />
-                <Dropdown pointing="top left" text="Tolga">
-                    <Dropdown.Menu>
-                        <Dropdown.Item text="Bilgilerim" icon="info" />
-                        <Dropdown.Item text="Çıkış Yap" icon="sign-out" />
-                    </Dropdown.Menu>
-                </Dropdown>
-            </Menu.Item>
-        </div>
+        <>
+            <UncontrolledDropdown className="btn-group">
+                <DropdownToggle
+                    aria-expanded={false}
+                    aria-haspopup={true}
+                    caret
+                    color="secondary"
+                    data-toggle="dropdown"
+                    type="button"
+                >
+                    Tolga
+                </DropdownToggle>
+                <DropdownMenu>
+                    <DropdownItem>
+                        Bilgilerim
+                    </DropdownItem>
+                    <DropdownItem onClick={signOut}>
+                        Çıkış Yap
+                    </DropdownItem>
+                </DropdownMenu>
+            </UncontrolledDropdown>
+        </>
     )
 }

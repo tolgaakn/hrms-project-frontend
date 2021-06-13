@@ -26,6 +26,10 @@
   color: black !important;
 }
 
+.font-weight-bold{
+  font-weight: bold !important;
+}
+
 .margin-top{
   margin-top: 1em;
 }
@@ -39,7 +43,9 @@
 }
 
 .margin-label{
-  margin: 6.33em 0 !important;
+  margin: 3em 0 !important;
+  margin-bottom: 0 !important;
+  margin-top: 5em !important;
 }
 
 .padding-md{
@@ -59,8 +65,13 @@
   color: white !important;
 }
 
+.application-deadline-label{
+  font-size: 11px !important;
+  margin: 3em 0 0 0 !important;
+}
+
 .margin-apply-button{
-  margin: 5.05em 0.5em !important;
+  margin: 0em 0.5em !important;
 }
 
 .ui.fluid.card:hover {

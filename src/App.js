@@ -11,7 +11,9 @@ function App() {
       <Navi />
 
       <Container>
+
         <Dashboard />
+        
       </Container>
       
       <Footer />
