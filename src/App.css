@@ -79,3 +79,12 @@
   transform: scale(1.005);
   text-decoration: none;
 }
+
+.job-advert-list:hover{
+  box-shadow: 0 12px 19px -7px rgb(0 0 0 / 30%);
+  transform: translateY(-10px);
+  -webkit-transform: translateY(-10px);
+  -ms-transform: translateY(-10px);
+  -moz-transform: translateY(-10px);
+  transition: transform .3s cubic-bezier(.34,2,.6,1),box-shadow .2s ease,-webkit-transform .3s cubic-bezier(.34,2,.6,1);
+}

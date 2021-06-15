@@ -6,11 +6,8 @@ import {
     Button,
     Card,
     CardBody,
-    CardImg,
     CardTitle,
-    CardText,
-    Row,
-    Col
+    Row
 } from "reactstrap";
 
 export default function JobAdvertisementDetail() {
@@ -47,8 +44,8 @@ export default function JobAdvertisementDetail() {
                             </Row>
                         </div>
                         <div className="col-md-3">
-                            <Button color="success" outline type="button" style={{margin:"1em 0"}}>
-                                İlana Başvur
+                            <Button color="danger" outline type="button" style={{margin:"1em 0"}}>
+                                Favorilere Ekle
                             </Button>
                         </div>
                     </Row>
@@ -59,16 +56,19 @@ export default function JobAdvertisementDetail() {
                         <div className="col-md-6" style={{paddingLeft:"4em"}}>
                             <CardTitle className="text-left mb-1 font-weight-bold">
                                 İş Açıklaması
-                                    <Badge className="badge-default text-capitalize" pill style={{ marginRight: "1em", marginLeft: "1em", fontSize: "0.8em" }}>
+                                    <Badge color={jobAdvertisement.jobTypeColor} className="text-capitalize" pill style={{ marginRight: "1em", marginLeft: "1em", fontSize: "0.8em" }}>
                                         {jobAdvertisement.jobTypeName}
                                     </Badge>
-                                    <Badge className="badge-warning text-capitalize " pill style={{ marginRight: "1em", fontSize: "0.8em" }}>
+                                    <Badge color={jobAdvertisement.workTypeColor} className="badge-warning text-capitalize " pill style={{ marginRight: "1em", fontSize: "0.8em" }}>
                                         {jobAdvertisement.workTypeName}
                                     </Badge>
                             </CardTitle>
                             <p className="text-left">{jobAdvertisement.jobDescription}</p>
                         </div>
-                        <div className="col-md-6"></div>
+                        <div className="col-md-6">
+                            <Badge color="success" style={{fontSize:"1em"}} className="text-capitalize mr-2">Min. Maaş : {jobAdvertisement.minSalary}</Badge>
+                            <Badge color="success" style={{fontSize:"1em"}} className="text-capitalize">Max. Maaş : {jobAdvertisement.maxSalary}</Badge>
+                        </div>
                     </Row>
 
                     <hr />

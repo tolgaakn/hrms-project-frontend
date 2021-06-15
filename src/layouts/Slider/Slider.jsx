@@ -1,44 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
-  Header,
   Form
 } from "semantic-ui-react";
 
 import "./Slider.css"
+import CityService from "../../services/cityService";
+import { useEffect } from "react";
 
 export default function Slider() {
+
+  const [cities, setCities] = useState([])
+
+  useEffect(() => {
+    let cityService = new CityService();
+    cityService.getCities().then((result) => setCities(result.data.data))
+  }, [])
+  
+
+  const citiesOptions = cities.map((city, index) =>({
+    key:index,
+    text:city.cityName,
+    value:city.id
+  }))
+
   return (
     <div className="ui vertical center aligned segment bg-slider">
       <Container text>
-        <Header
-          className="margin-top-2"
-          as="h1"
-          content="Imagine-a-Company"
-          inverted
-          style={{
-            fontSize: "4em",
-            fontWeight: "normal",
-            marginBottom: 0,
-
-          }}
-        />
-        <Header
-          as="h2"
-          content="Do whatever you want when you want to."
-          inverted
-          style={{
-            fontSize: "1.7em",
-            fontWeight: "normal",
-            marginTop: "1.5em",
-          }}
-        />
         <Form className="margin-bottom-6">
           <Form.Group widths='equal'>
             <Form.Input fluid placeholder='Position Name' />
             <Form.Select
               fluid
               placeholder='City'
+              options={citiesOptions}
             />
             <Form.Button fluid color="black">Search Job</Form.Button>
           </Form.Group>

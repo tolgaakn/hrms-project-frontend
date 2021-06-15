@@ -1,20 +1,9 @@
 import React, { useState } from "react";
-import { Menu, Dropdown } from "semantic-ui-react";
 import SignedIn from "./SignedIn";
 import SignedOut from "./SignedOut";
 import { Link } from "react-router-dom";
 import {
     UncontrolledCollapse,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-    FormGroup,
-    Form,
-    Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
     NavbarBrand,
     Navbar,
     NavItem,
@@ -40,7 +29,7 @@ export default function Navi() {
             <Navbar className="bg-success" expand="lg">
                 <Container>
                     <NavbarBrand>
-                        Navbar
+                        SonundaBuldum.net
                     </NavbarBrand>
                     <button className="navbar-toggler" id="navbarNav" type="button">
                         <span className="navbar-toggler-icon"></span>
@@ -49,22 +38,16 @@ export default function Navi() {
                         <Nav navbar>
                             <NavItem>
                                 <Link to={"/"}>
-                                    <NavLink>
-                                        Home
-                                    </NavLink>
+                                    Home
                                 </Link>
                             </NavItem>
                             <NavItem>
                                 <Link to={"/jobAdvertisements"}>
-                                    <NavLink>
-                                        İlanlar
-                                    </NavLink>
+                                    İlanlar
                                 </Link>
                             </NavItem>
                             <NavItem>
-                                <NavLink>
-                                    Pricing
-                                </NavLink>
+                                Pricing
                             </NavItem>
                         </Nav>
                     </UncontrolledCollapse>

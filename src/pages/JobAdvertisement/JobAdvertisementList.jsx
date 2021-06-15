@@ -37,7 +37,7 @@ export default function JobAdvertisementPage() {
         <div className="col-md-9">
           <>
             {jobAdvertisements.map((jobAdvertisement) =>(
-              <Card className="card-stats mb-4 mb-lg-0 mt-4" key={jobAdvertisement.id}>
+              <Card className="card-stats mb-4 mb-lg-0 mt-4 job-advert-list" key={jobAdvertisement.id}>
                 <CardBody>
                   <Row>
                     <div className="col-md-7" style={{ paddingLeft: "2.5em" }}>
@@ -78,7 +78,7 @@ export default function JobAdvertisementPage() {
 
                     </div>
                     <div className="col-md-3" style={{ margin: "3em 0" }}>
-                      <Link to={`/jobAdvertisements/${jobAdvertisement.id}`}>
+                      <Link to={`/jobAdvertisements/jobAdvertisementDetail/${jobAdvertisement.id}`}>
                         <Button color="success" outline type="button">
                           Detaylar
                         </Button>

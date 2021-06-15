@@ -4,7 +4,7 @@ import { Dropdown, Input, Menu } from "semantic-ui-react";
 export default function Filter() {
   return (
     <div>
-      <Menu vertical>
+      {/* <Menu vertical>
         <Menu.Item>
           <Input placeholder="Search..." />
         </Menu.Item>
@@ -36,7 +36,7 @@ export default function Filter() {
             <Dropdown.Item icon="settings" text="Account Settings" />
           </Dropdown.Menu>
         </Dropdown>
-      </Menu>
+      </Menu> */}
     </div>
   );
 }
