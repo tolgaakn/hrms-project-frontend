@@ -18,7 +18,7 @@ export default function JobAdvertisementDetail() {
     useEffect(() => {
         let jobAdvertisementService = new JobAdvertisementService()
         jobAdvertisementService.getById(advertisementId).then(result => setJobAdvertisement(result.data.data))
-    }, [])
+    })
 
     return (
         <div style={{ marginTop: "3em" }}>

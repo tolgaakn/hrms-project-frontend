@@ -196,7 +196,14 @@ export default function AddJobAdvertisement() {
         </Form.Group>
 
         <Form.Group>
-          <Form.Input required width={6} label="Son Başvuru Tarihi" name="applicationDeadline" placeholder="Son Başvuru Tarihi" value={formik.values.applicationDeadline} onChange={formik.handleChange} />
+          <Form.Input 
+            required 
+            width={6} 
+            label="Son Başvuru Tarihi" 
+            name="applicationDeadline" 
+            placeholder="Son Başvuru Tarihi" 
+            value={formik.values.applicationDeadline} 
+            onChange={formik.handleChange} />
           {
             formik.errors.applicationDeadline && formik.touched.applicationDeadline ? (
               <Message color="red">{formik.errors.applicationDeadline}</Message>

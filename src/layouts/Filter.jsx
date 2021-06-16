@@ -1,5 +1,4 @@
 import React from "react";
-import { Dropdown, Input, Menu } from "semantic-ui-react";
 
 export default function Filter() {
   return (
