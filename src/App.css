@@ -26,6 +26,10 @@
   color: black !important;
 }
 
+.font-color-white{
+  color: white !important;
+}
+
 .font-weight-bold{
   font-weight: bold !important;
 }

@@ -41,7 +41,6 @@ export default function JobPositionList() {
                                 <tr>
                                     <th scope="col">#Id</th>
                                     <th scope="col">İş Pozisyonu</th>
-                                    <th scope="col">İşlemler</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,20 +48,6 @@ export default function JobPositionList() {
                                     <tr key={jobPosition.id}>
                                         <th>{jobPosition.id}</th>
                                         <td>{jobPosition.position}</td>
-                                        <td>
-                                            <Button className="btn-icon btn-3" outline size="sm" color="secondary" type="button">
-                                                <span className="btn-inner--icon">
-                                                    <i className="ni ni-ruler-pencil" />
-                                                </span>
-                                                <span className="btn-inner--text">Güncelle</span>
-                                            </Button>
-                                            <Button className="btn-icon btn-3" outline size="sm" color="info" type="button">
-                                                <span className="btn-inner--icon">
-                                                    <i className="ni ni-box-2" />
-                                                </span>
-                                                <span className="btn-inner--text">Sil</span>
-                                            </Button>
-                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

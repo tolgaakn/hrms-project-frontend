@@ -35,17 +35,17 @@ export default function Navi() {
                     </button>
                     <UncontrolledCollapse navbar toggler="#navbarNav">
                         <Nav navbar>
-                            <NavItem>
-                                <Link to={"/"}>
+                            <NavItem className="mr-3">
+                                <Link className="font-color-white font-weight-bold" to={"/"}>
                                     Home
                                 </Link>
                             </NavItem>
-                            <NavItem>
-                                <Link to={"/jobAdvertisements"}>
+                            <NavItem className="mr-3">
+                                <Link className="font-color-white font-weight-bold" to={"/jobAdvertisements"}>
                                     İlanlar
                                 </Link>
                             </NavItem>
-                            <NavItem>
+                            <NavItem className="mr-3">
                                 Pricing
                             </NavItem>
                         </Nav>

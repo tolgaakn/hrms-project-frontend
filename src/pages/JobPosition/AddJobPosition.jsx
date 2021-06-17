@@ -14,7 +14,6 @@ import {
     UncontrolledAlert
 } from "reactstrap";
 import JobPositionService from '../../services/jobPositionService';
-import { Message } from 'semantic-ui-react';
 
 export default function AddJobPosition() {
 

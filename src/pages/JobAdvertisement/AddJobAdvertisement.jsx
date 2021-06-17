@@ -6,16 +6,28 @@ import CityService from "../../services/cityService";
 import JobTypeService from '../../services/jobTypeService';
 import WorkTypeService from '../../services/workTypeService';
 import JobAdvertisementService from "../../services/jobAdvertisementService";
-import { Form, Message } from "semantic-ui-react";
+import { Form } from "semantic-ui-react";
 import { useFormik } from 'formik';
 import * as Yup from "yup";
+import {
+  Alert,
+  Button,
+  Card,
+  FormGroup,
+  Row,
+  Col,
+  CardBody
+} from "reactstrap";
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
-
-export default function AddJobAdvertisement() {
+export default function AddJobAdvertisement2() {
   const [jobPositions, setJobPositions] = useState([]);
   const [cities, setCities] = useState([]);
   const [jobTypes, setJobTypes] = useState([]);
   const [workTypes, setWorkTypes] = useState([]);
+
+  const history = useHistory()
 
   useEffect(() => {
     let jobPositionService = new JobPositionService();
@@ -46,7 +58,7 @@ export default function AddJobAdvertisement() {
       jobDescription: Yup.string().required("İş tanımı boş olamaz"),
       openPosition: Yup.number().required("Açık pozisyon sayısı boş olamaz"),
       applicationDeadline: Yup.date().required("Son başvuru tarihi boş olamaz"),
-      minSalary: Yup.number(),
+      minSalary: Yup.number().required("Minimum maaş boş olamaz"),
       maxSalary: Yup.number(),
       employerId: Yup.number(),
       cityId: Yup.number().required("Şehir boş olamaz"),
@@ -56,19 +68,19 @@ export default function AddJobAdvertisement() {
     }),
     onSubmit: (values) => {
       let jobAdvertisementModel = {
-        jobPosition:{
+        jobPosition: {
           id: values.jobPositionId
         },
-        employer:{
+        employer: {
           id: 24
         },
-        city:{
+        city: {
           id: values.cityId
         },
-        jobType:{
+        jobType: {
           id: values.jobTypeId
         },
-        workType:{
+        workType: {
           id: values.workTypeId
         },
         jobDescription: values.jobDescription,
@@ -80,7 +92,8 @@ export default function AddJobAdvertisement() {
 
       let jobAdvertisementService = new JobAdvertisementService();
       jobAdvertisementService.add(jobAdvertisementModel).then((result) => console.log(result));
-      alert("Success")
+      toast.success("İş ilanı eklendi. Sistem tarafından onaylanacaktır.")
+      history.push("/")
     }
   });
 
@@ -88,7 +101,7 @@ export default function AddJobAdvertisement() {
     formik.setFieldValue(field, value);
   }
 
-  const jobPositionOptions = jobPositions.map((jobPosition, index) =>({
+  const jobPositionOptions = jobPositions.map((jobPosition, index) => ({
     key: index,
     text: jobPosition.position,
     value: jobPosition.id
@@ -114,160 +127,209 @@ export default function AddJobAdvertisement() {
 
   return (
     <div>
-      <Form onSubmit={formik.handleSubmit}>
-        <Form.Group widths={2}>
-          <Form.Dropdown
-            clearable 
-            required 
-            label="İş Pozisyonları" 
-            placeholder="İş pozisyonu seç" 
-            selection 
-            search 
-            value={formik.values.jobPositionId} 
-            options={jobPositionOptions}
-            onChange={(event, data) =>{
-              handleChangeSemantic("jobPositionId", data.value)
-            }}
-            />
-            {formik.errors.jobPositionId && formik.touched.jobPositionId ? (
-              <Message color="red">{formik.errors.jobPositionId}</Message>
-            ) : null}
-
-          <Form.Dropdown 
-            clearable
-            required 
-            label="Şehirler" 
-            placeholder="Şehir Seç" 
-            selection 
-            search 
-            value={formik.values.cityId} 
-            options={cityOptions} 
-            onChange={(event, data) => {
-              handleChangeSemantic("cityId", data.value)
-          }}
-          />
-          {
-            formik.errors.cityId && formik.touched.cityId ? (
-              <Message color="red">{formik.errors.cityId}</Message>
-            ) : null
-          }
-        </Form.Group>
-
-        <Form.Group widths={3}>
-          <Form.Input 
-            label="Minimum Maaş" 
-            name="minSalary" 
-            placeholder="Minimum Maaş" 
-            value={formik.values.minSalary} 
-            onChange={formik.handleChange} 
-          />
-          {
-            formik.errors.minSalary && formik.touched.minsalary ? (
-              <Message color="red">{formik.errors.minSalary}</Message>
-            ): null
-          }
-
-          <Form.Input 
-            label="Maksimum Maaş" 
-            name="maxSalary" 
-            placeholder="Maksimum Maaş" 
-            value={formik.values.maxSalary} 
-            onChange={formik.handleChange} 
-          />
-          {
-            formik.errors.maxSalary && formik.touched.maxSalary ? (
-              <Message color="red">{formik.errors.maxSalary}</Message>
-            ): null
-          }
-
-          <Form.Input 
-            required 
-            label="Açık Pozisyon" 
-            name="openPosition" 
-            placeholder="Açık pozisyon" 
-            value={formik.values.openPosition} 
-            onChange={formik.handleChange} 
-          />
-          {
-            formik.errors.openPosition && formik.touched.openPosition ? (
-              <Message color="red">{formik.errors.openPosition}</Message>
-            ): null
-          }
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Input 
-            required 
-            width={6} 
-            label="Son Başvuru Tarihi" 
-            name="applicationDeadline" 
-            placeholder="Son Başvuru Tarihi" 
-            value={formik.values.applicationDeadline} 
-            onChange={formik.handleChange} />
-          {
-            formik.errors.applicationDeadline && formik.touched.applicationDeadline ? (
-              <Message color="red">{formik.errors.applicationDeadline}</Message>
-            ): null
-          }
-          <Form.Field style={{marginLeft:"30px"}}>
-            <Form.Dropdown 
-              clearable
-              required 
-              label="İş Türü" 
-              placeholder="İş türü seç" 
-              selection 
-              search 
-              value={formik.values.jobTypeId} 
-              options={jobTypeOptions} 
-              onChange={(event, data) =>{
-                handleChangeSemantic("jobTypeId", data.value)
-            }} 
-            />
-            {
-              formik.errors.jobTypeId && formik.touched.jobTypeId ? (
-                <Message color="red">{formik.errors.jobTypeId}</Message>
-              ): null
-            }
-          </Form.Field>
-
-          <Form.Field style={{marginLeft:"150px"}}>
-            <Form.Dropdown 
-              clearable
-              required 
-              label="Çalışma Türü" 
-              placeholder="Çalışma türü seç" 
-              selection 
-              search 
-              value={formik.values.workTypeId} 
-              options={workTypeOptions} 
-              onChange={(event, data) =>{
-                handleChangeSemantic("workTypeId", data.value)
-            }} 
-            />
-            {
-              formik.errors.workTypeId && formik.touched.workTypeId ? (
-                <Message color="red">{formik.errors.workTypeId}</Message>
-              ): null
-            }
-          </Form.Field>
-        </Form.Group>
-
-        <Form.TextArea 
-          label="İş tanımı" 
-          required 
-          name="jobDescription"
-          placeholder="İş tanımı" 
-          value={formik.values.jobDescription} 
-          onChange={formik.handleChange} 
-        />
-        {
-          formik.errors.jobDescription && formik.touched.jobDescription ? (
-            <Message color="red">{formik.errors.jobDescription}</Message>
-          ): null
-        }
-
-        <Form.Button onClick={formik.handleSubmit} type="submit" positive>Kaydet</Form.Button>
-      </Form>
+      <Card style={{ marginTop: "3em" }}>
+        <CardBody>
+          <Form>
+            <Row>
+              <Col md="6">
+                <FormGroup>
+                  <Form.Dropdown
+                    clearable
+                    required
+                    label="İş Pozisyonları"
+                    placeholder="İş pozisyonu seç"
+                    selection
+                    search
+                    value={formik.values.jobPositionId}
+                    options={jobPositionOptions}
+                    onChange={(event, data) => {
+                      handleChangeSemantic("jobPositionId", data.value)
+                    }}
+                  />
+                  {formik.errors.jobPositionId && formik.touched.jobPositionId ? (
+                    <Alert color="danger">
+                      <strong>{formik.errors.jobPositionId}</strong>
+                    </Alert>
+                  ) : null}
+                </FormGroup>
+              </Col>
+              <Col md="6">
+                <FormGroup>
+                  <Form.Dropdown
+                    clearable
+                    required
+                    label="Şehirler"
+                    placeholder="Şehir Seç"
+                    selection
+                    search
+                    value={formik.values.cityId}
+                    options={cityOptions}
+                    onChange={(event, data) => {
+                      handleChangeSemantic("cityId", data.value)
+                    }}
+                  />
+                  {
+                    formik.errors.cityId && formik.touched.cityId ? (
+                      <Alert color="danger">
+                        <strong>{formik.errors.cityId}</strong>
+                      </Alert>
+                    ) : null
+                  }
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md="6">
+                <Row>
+                  <Col md="6">
+                    <Form.Dropdown
+                      clearable
+                      required
+                      label="İş Türü"
+                      placeholder="İş türü seç"
+                      selection
+                      search
+                      value={formik.values.jobTypeId}
+                      options={jobTypeOptions}
+                      onChange={(event, data) => {
+                        handleChangeSemantic("jobTypeId", data.value)
+                      }}
+                    />
+                    {
+                      formik.errors.jobTypeId && formik.touched.jobTypeId ? (
+                        <Alert color="danger">
+                          <strong>{formik.errors.jobTypeId}</strong>
+                        </Alert>
+                      ) : null
+                    }
+                  </Col>
+                  <Col md="6">
+                    <Form.Dropdown
+                      clearable
+                      required
+                      label="Çalışma Türü"
+                      placeholder="Çalışma türü seç"
+                      selection
+                      search
+                      value={formik.values.workTypeId}
+                      options={workTypeOptions}
+                      onChange={(event, data) => {
+                        handleChangeSemantic("workTypeId", data.value)
+                      }}
+                    />
+                    {
+                      formik.errors.workTypeId && formik.touched.workTypeId ? (
+                        <Alert color="danger">
+                          <strong>{formik.errors.workTypeId}</strong>
+                        </Alert>
+                      ) : null
+                    }
+                  </Col>
+                </Row>
+              </Col>
+              <Col md="6">
+                <FormGroup>
+                  <Form.Input
+                    required
+                    label="Açık Pozisyon"
+                    name="openPosition"
+                    placeholder="Açık pozisyon"
+                    value={formik.values.openPosition}
+                    onChange={formik.handleChange}
+                  />
+                  {
+                    formik.errors.openPosition && formik.touched.openPosition ? (
+                      <Alert color="danger">
+                        <strong>{formik.errors.openPosition}</strong>
+                      </Alert>
+                    ) : null
+                  }
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md="6">
+                <Row>
+                  <Col md="6">
+                    <FormGroup>
+                      <Form.Input
+                        required
+                        label="Minimum Maaş"
+                        name="minSalary"
+                        placeholder="Minimum Maaş"
+                        value={formik.values.minSalary}
+                        onChange={formik.handleChange}
+                      />
+                      {
+                        formik.errors.minSalary && formik.touched.minsalary ? (
+                          <Alert color="danger">
+                            <strong>{formik.errors.minSalary}</strong>
+                          </Alert>
+                        ) : null
+                      }
+                    </FormGroup>
+                  </Col>
+                  <Col md="6">
+                    <FormGroup>
+                      <Form.Input
+                        label="Maksimum Maaş"
+                        name="maxSalary"
+                        placeholder="Maksimum Maaş"
+                        value={formik.values.maxSalary}
+                        onChange={formik.handleChange}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+              </Col>
+              <Col md="6">
+                <FormGroup>
+                  <Form.Input
+                    required
+                    label="Son Başvuru Tarihi"
+                    name="applicationDeadline"
+                    placeholder="Son Başvuru Tarihi"
+                    value={formik.values.applicationDeadline}
+                    onChange={formik.handleChange} />
+                  {
+                    formik.errors.applicationDeadline && formik.touched.applicationDeadline ? (
+                      <Alert color="danger">
+                        <strong>{formik.errors.applicationDeadline}</strong>
+                      </Alert>
+                    ) : null
+                  }
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.TextArea
+                  label="İş tanımı"
+                  required
+                  name="jobDescription"
+                  placeholder="İş tanımı"
+                  value={formik.values.jobDescription}
+                  onChange={formik.handleChange}
+                />
+                {
+                  formik.errors.jobDescription && formik.touched.jobDescription ? (
+                    <Alert color="danger">
+                      <strong>{formik.errors.jobDescription}</strong>
+                    </Alert>
+                  ) : null
+                }
+              </Col>
+            </Row>
+            <Row>
+              <Col md="4"></Col>
+              <Col md="4">
+                <Button className="mt-3" onClick={formik.handleSubmit} color="success" block type="submit">Kaydet</Button>
+              </Col>
+              <Col md="4"></Col>
+            </Row>
+          </Form>
+        </CardBody>
+      </Card>
     </div>
   )
 }
