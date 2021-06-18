@@ -1,3 +1,10 @@
+<details>
+  <summary><b>Proje Görselleri</b></summary>
+  <img src="images/add-job-advertisement-page.PNG" name="add-job-advertisement-page">
+  <img src="images/job-advertisement-list-page.PNG" name="job-advertisement-list-page">
+  <img src="images/job-advertisement-detail-page.PNG" name="job-advertisement-detail-page">
+</details>
+
 # UML Component Diagram
 
 ![plot](images/uml-diagram.png)
