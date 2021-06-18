@@ -9,6 +9,7 @@ import {
     CardTitle,
     Row
 } from "reactstrap";
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 export default function JobAdvertisementDetail() {
     let { advertisementId } = useParams();
@@ -63,7 +64,7 @@ export default function JobAdvertisementDetail() {
                                         {jobAdvertisement.workTypeName}
                                     </Badge>
                             </CardTitle>
-                            <p className="text-left">{jobAdvertisement.jobDescription}</p>
+                            <p className="text-left">{ReactHtmlParser(jobAdvertisement.jobDescription)}</p>
                         </div>
                         <div className="col-md-6">
                             <Badge color="success" style={{fontSize:"1em"}} className="text-capitalize mr-2">Min. Maaş : {jobAdvertisement.minSalary}</Badge>

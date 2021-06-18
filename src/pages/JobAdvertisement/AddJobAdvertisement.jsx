@@ -19,9 +19,11 @@ import {
   CardBody
 } from "reactstrap";
 import { toast } from 'react-toastify';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-export default function AddJobAdvertisement2() {
+export default function AddJobAdvertisement() {
   const [jobPositions, setJobPositions] = useState([]);
   const [cities, setCities] = useState([]);
   const [jobTypes, setJobTypes] = useState([]);
@@ -129,7 +131,7 @@ export default function AddJobAdvertisement2() {
     <div>
       <Card style={{ marginTop: "3em" }}>
         <CardBody>
-          <Form>
+          <Form onSubmit={formik.handleSubmit}>
             <Row>
               <Col md="6">
                 <FormGroup>
@@ -303,13 +305,23 @@ export default function AddJobAdvertisement2() {
             </Row>
             <Row>
               <Col>
-                <Form.TextArea
+                {/* <Form.TextArea
                   label="İş tanımı"
                   required
                   name="jobDescription"
                   placeholder="İş tanımı"
                   value={formik.values.jobDescription}
                   onChange={formik.handleChange}
+                /> */}
+                <CKEditor
+                  name="jobDescription"
+                  label="İş tanımı"
+                  required
+                  editor={ClassicEditor}
+                  value={formik.values.jobDescription}
+                  onChange={(event, editor) => {
+                    handleChangeSemantic("jobDescription", editor.getData())
+                  }}
                 />
                 {
                   formik.errors.jobDescription && formik.touched.jobDescription ? (
