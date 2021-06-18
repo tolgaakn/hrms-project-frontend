@@ -4,7 +4,9 @@
 
 
 <details>
-  <summary>The title of the image group</summary><details>
+  <summary>The title of the image group</summary>
+</details>  
+<details>
   <img src="images/add-job-advertisement-page.png" name="image-name">
   <img src="images/job-advertisement-list-page.png" name="image-name">
   <img src="images/job-advertisement-detail-page.png" name="image-name">
