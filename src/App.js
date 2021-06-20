@@ -10,11 +10,7 @@ function App() {
     <div className="App">
       <Navi />
 
-      <Container>
-
-        <Dashboard />
-        
-      </Container>
+      <Dashboard />
       
       <Footer />
     </div>

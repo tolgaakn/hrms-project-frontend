@@ -1,37 +1,35 @@
 import React from "react";
 import {
-    Button,
-    Container,
-    Divider,
-    Grid,
-    Header,
-    Segment,
-  } from 'semantic-ui-react'
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Header,
+  Segment,
+} from 'semantic-ui-react'
 import Slider from "../layouts/Slider/Slider";
 
 export default function HomePage() {
   return (
     <div>
       <Slider />
-      
-      <Container>
       <Segment style={{ padding: "0em" }} vertical>
         <Grid celled="internally" columns="equal" stackable>
           <Grid.Row textAlign="center">
             <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
               <Header as="h3" style={{ fontSize: "2em" }}>
-                "What a Company"
+                "Lorem ipsum dolor"
               </Header>
               <p style={{ fontSize: "1.33em" }}>
-                That is what they all say about us
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </p>
             </Grid.Column>
             <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
               <Header as="h3" style={{ fontSize: "2em" }}>
-                "I shouldn't have gone with their competitor."
+                "Quisquam quo at sequi minus hic accusantium illo impedit.""
               </Header>
               <p style={{ fontSize: "1.33em" }}>
-                Chief Fun Officer Acme Toys
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum laboriosam quidem, consectetur ratione voluptatibus fuga.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -41,13 +39,12 @@ export default function HomePage() {
       <Segment style={{ padding: "8em 0em" }} vertical>
         <Container text>
           <Header as="h3" style={{ fontSize: "2em" }}>
-            Breaking The Grid, Grabs Your Attention
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
           </Header>
           <p style={{ fontSize: "1.33em" }}>
-            Instead of focusing on content creation and hard work, we have
-            learned how to master the art of doing nothing by providing massive
-            amounts of whitespace and generic content that can seem massive,
-            monolithic and worth your attention.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Blanditiis perspiciatis totam ad nisi enim ipsam, error necessitatibus impedit cum quod omnis soluta neque sed fugit voluptatem sapiente. 
+            Inventore, rem esse.
           </p>
           <Button as="a" size="large">
             Read More
@@ -62,20 +59,21 @@ export default function HomePage() {
           </Divider>
 
           <Header as="h3" style={{ fontSize: "2em" }}>
-            Did We Tell You About Our Bananas?
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
           </Header>
           <p style={{ fontSize: "1.33em" }}>
-            Yes I know you probably disregarded the earlier boasts as
-            non-sequitur filler content, but it's really true. It took years of
-            gene splicing and combinatory DNA research, but our bananas can
-            really dance.
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+            Ea laborum dolorem, exercitationem eaque distinctio quae esse excepturi! 
+            A molestiae facere voluptatem, pariatur, consequatur optio asperiores doloremque alias non impedit eligendi?
+            Quidem consequatur quod, voluptates sit numquam maxime inventore tempora dolorum, dignissimos repudiandae esse, 
+            excepturi dolor earum dicta eum nulla repellendus enim ex? 
+            Ducimus, maiores mollitia laudantium facere tempore necessitatibus voluptatum.
           </p>
           <Button as="a" size="large">
             I'm Still Quite Interested
           </Button>
         </Container>
       </Segment>
-      </Container>
     </div>
   );
 }
