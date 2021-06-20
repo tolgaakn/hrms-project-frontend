@@ -9,7 +9,7 @@ import {
     CardTitle,
     Row
 } from "reactstrap";
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
 
 export default function JobAdvertisementDetail() {
     let { advertisementId } = useParams();
@@ -18,7 +18,8 @@ export default function JobAdvertisementDetail() {
 
     useEffect(() => {
         let jobAdvertisementService = new JobAdvertisementService()
-        jobAdvertisementService.getById(advertisementId).then(result => setJobAdvertisement(result.data.data))
+        jobAdvertisementService.getById(advertisementId)
+        .then(result => setJobAdvertisement(result.data.data))
     })
 
     return (

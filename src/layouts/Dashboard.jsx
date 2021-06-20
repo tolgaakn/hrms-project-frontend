@@ -10,6 +10,8 @@ import AddJobPosition from '../pages/JobPosition/AddJobPosition'
 import AdminJobAdvertisementList from "../pages/Admin/JobAdvertisement/AdminJobAdvertisementList"
 import AdminJobAdvertisementDetail from "../pages/Admin/JobAdvertisement/AdminJobAdvertisementDetail"
 import { ToastContainer } from "react-toastify";
+import CurriculumVitaeList from '../pages/CurriculumVitae/CurriculumVitaeList'
+import CurriculumVitaeDetail from '../pages/CurriculumVitae/CurriculumVitaeDetail'
 
 export default function Dashboard() {
     return (
@@ -29,6 +31,9 @@ export default function Dashboard() {
 
                         <Route exact path="/jobPositions" component={JobPositionList} />
                         <Route exact path="/jobPositions/addJobPosition" component={AddJobPosition} />
+
+                        <Route exact path="/curriculumVitaes" component={CurriculumVitaeList} />
+                        <Route exact path="/curriculumVitaes/curriculumVitaeDetail/:curriculumVitaeId" component={CurriculumVitaeDetail} />
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
