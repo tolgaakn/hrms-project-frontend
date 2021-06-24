@@ -7,21 +7,25 @@ import {
   Button,
   FormGroup,
   Form,
-  Input,
   Row,
   Col
 } from "reactstrap";
 import "./Slider.css"
 import CityService from "../../services/cityService";
+import JobPositionService from "../../services/jobPositionService";
 import { useEffect } from "react";
 
 export default function Slider() {
 
   const [cities, setCities] = useState([])
+  const [jobPositions, setJobPositions] = useState([])
 
   useEffect(() => {
     let cityService = new CityService();
+    let jobPositionService = new JobPositionService();
+
     cityService.getCities().then((result) => setCities(result.data.data))
+    jobPositionService.getJobPositions().then((result) => setJobPositions(result.data.data))
   }, [])
 
 
@@ -30,7 +34,13 @@ export default function Slider() {
     text: city.cityName,
     value: city.id
   }))
-  
+
+  const jobPositionOptions = jobPositions.map((jobPosition, index) => ({
+    key: index,
+    text: jobPosition.position,
+    value: jobPosition.id
+  }))
+
   return (
     <div style={{ backgroundColor: "cadetblue", position: "relative" }}>
       <Image
@@ -40,13 +50,14 @@ export default function Slider() {
       />
       <Form style={{ position: "absolute", left: 0, top: 0, margin: "23em 51em" }}>
         <Row>
-          <Col md="4">
+          <Col md="4" style={{paddingLeft:0}}>
             <FormGroup>
-              <Input
-                className="form-control-alternative"
-                id="exampleFormControlInput1"
-                placeholder="Pozisyon Adı"
-                type="text"
+              <Dropdown
+                clearable
+                placeholder='İş Pozisyonu'
+                search
+                selection
+                options={jobPositionOptions}
               />
             </FormGroup>
           </Col>

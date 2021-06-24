@@ -1,5 +1,4 @@
 import React from 'react'
-import { Grid } from 'semantic-ui-react'
 import JobAdvertisementList from "../pages/JobAdvertisement/JobAdvertisementList"
 import { Route } from 'react-router'
 import HomePage from '../pages/HomePage'
