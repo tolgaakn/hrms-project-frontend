@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { useHistory } from 'react-router';
 import JobAdvertisementService from '../../../services/jobAdvertisementService';
 import {
     Badge,
@@ -28,11 +29,10 @@ export default function JobAdvertisementDetail() {
         <div style={{ marginTop: "3em" }}>
             <Formik
             onSubmit={(values) => {
-                console.log(values)
                 let advertisementConfirmByEmployeeService = new AdvertisementConfirmByEmployeeService();
                 advertisementConfirmByEmployeeService.confirmAdvertisement(jobAdvertisement.id, 27).then((result) => {
-                    history.push("/admin/jobAdvertisements")
                     toast.info("İş ilanı onaylandı")
+                    history.push("/admin/jobAdvertisements")
                 })
             }}
             >
