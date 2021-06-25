@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import JobAdvertisementService from "../../../services/jobAdvertisementService";
+import AdvertisementConfirmByEmployeeService from "../../../services/advertisementConfirmByEmployeeService";
 import { Table } from 'semantic-ui-react'
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
@@ -9,9 +9,9 @@ export default function JobAdvertisementPage() {
   const [jobAdvertisements, setJobAdvertisements] = useState([]);
 
   useEffect(() => {
-    let jobAdvertisementService = new JobAdvertisementService();
-    jobAdvertisementService
-      .getJobAdvertisements()
+    let advertisementConfirmByEmployeeService = new AdvertisementConfirmByEmployeeService();
+    advertisementConfirmByEmployeeService
+      .getJobAdvertisementConfirmRequests()
       .then((result) => setJobAdvertisements(result.data.data));
   }, []);
 
@@ -35,7 +35,7 @@ export default function JobAdvertisementPage() {
             <Table.Body>
               {
                 jobAdvertisements.map((jobAdvertisement) => (
-                  <Table.Row>
+                  <Table.Row key={jobAdvertisement.id}>
                     <Table.Cell>{jobAdvertisement.id}</Table.Cell>
                     <Table.Cell>{jobAdvertisement.companyName}</Table.Cell>
                     <Table.Cell>{jobAdvertisement.createdDate}</Table.Cell>
