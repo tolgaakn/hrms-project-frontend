@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import CurriculumVitaeList from '../pages/CurriculumVitae/CurriculumVitaeList'
 import CurriculumVitaeDetail from '../pages/CurriculumVitae/CurriculumVitaeDetail'
 import { Container } from 'reactstrap'
+import AddCurriculumVitae from '../pages/CurriculumVitae/AddCurriculumVitae'
 
 export default function Dashboard() {
     return (
@@ -31,6 +32,7 @@ export default function Dashboard() {
 
                 <Route exact path="/curriculumVitaes" component={CurriculumVitaeList} />
                 <Route exact path="/curriculumVitaes/curriculumVitaeDetail/:curriculumVitaeId" component={CurriculumVitaeDetail} />
+                <Route exact path="/curriculumVitaes/addCurriculumVitae" component={AddCurriculumVitae} />
             </Container>
         </div>
     )
