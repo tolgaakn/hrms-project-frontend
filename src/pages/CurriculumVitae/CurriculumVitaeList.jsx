@@ -20,6 +20,10 @@ function exampleReducer(state, action) {
     }
 }
 
+const refreshPage = ()=>{
+    window.location.reload();
+}
+
 export default function CurriculumVitaeList() {
 
     const [curriculumVitaes, setCurriculumVitaes] = useState([]);
@@ -38,6 +42,7 @@ export default function CurriculumVitaeList() {
     })
     const { open, size } = state
 
+    
 
     const initialValues = { curriculumVitaeName: "" }
     const schema = Yup.object({ curriculumVitaeName: Yup.string().required("Özgeçmiş adı yazın") })
@@ -48,7 +53,9 @@ export default function CurriculumVitaeList() {
                     <Button style={{ float: "right" }} color="success" type="button" onClick={() => dispatch({ type: "open", size: "mini" })}>Yeni Özgeçmiş Ekle</Button>
                 </CardBody>
             </Card>
-            <Formik initialValues={initialValues} validationSchema={schema}
+            <Formik
+                initialValues={initialValues}
+                validationSchema={schema}
                 onSubmit={(values) => {
                     let curriculumVitaeModel = {
                         candidateId: 25,
@@ -58,18 +65,17 @@ export default function CurriculumVitaeList() {
                     let curriculumVitaeService = new CurriculumVitaeService();
                     curriculumVitaeService.add(curriculumVitaeModel).then((result) => {
                         toast.success("Özgeçmiş eklendi. Özgeçmişinizi düzenleyebilirsiniz.")
+                        setTimeout(() => {
+                            refreshPage()
+                        }, 2000);
                     })
                 }}
             >
-                <Form className="ui form">
-                    <Modal
-                        size={size}
-                        open={open}
-                        onClose={() => dispatch({ type: 'close' })}
-                    >
+                
+                    <Modal size={size} open={open} onClose={() => dispatch({ type: 'close' })}>
 
                         <Modal.Header>Yeni Özgeçmiş Ekle</Modal.Header>
-
+                        <Form className="ui form">
                         <Modal.Content>
 
                             <HrmsTextInput className="form-control" name="curriculumVitaeName" placeholder="Özgeçmiş Adı" />
@@ -83,9 +89,9 @@ export default function CurriculumVitaeList() {
                                 Ekle
                             </Button>
                         </Modal.Actions>
-
+                        </Form>
                     </Modal>
-                </Form>
+                
             </Formik>
             <Table singleLine>
                 <Table.Header>
@@ -98,7 +104,7 @@ export default function CurriculumVitaeList() {
 
                 <Table.Body>
                     {curriculumVitaes.map((curriculumVitae) => (
-                        <Table.Row>
+                        <Table.Row key={curriculumVitae.id}>
                             <Table.Cell>{curriculumVitae.curriculumVitaeName}</Table.Cell>
                             <Table.Cell>{curriculumVitae.createdDate}</Table.Cell>
                             <Table.Cell>
