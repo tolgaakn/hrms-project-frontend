@@ -2,39 +2,21 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-    Button,
-    Card,
-    CardBody,
-    CardImg,
-    CardTitle,
-    Progress,
-    Row,
-    Col
-} from "reactstrap";
+import { Button, Card, CardBody, CardImg, CardTitle, Progress, Row, Col } from "reactstrap";
 import { List } from 'semantic-ui-react'
 import { Menu, Modal } from 'semantic-ui-react'
 import { Formik, Form } from 'formik'
 import * as Yup from "yup";
 import CurriculumVitaeService from '../../services/curriculumVitaeService';
 import CandidateEducationService from '../../services/candidateEducationService'
+import CandidateExperienceService from '../../services/candidateExperienceService'
+import CandidateLanguageService from '../../services/candidateLanguageService'
 import DegreeService from '../../services/degreeService'
 import { toast } from 'react-toastify';
 import HrmsTextInput from '../../utilities/customFormControls/HrmsTextInput';
 import HrmsSelect from '../../utilities/customFormControls/HrmsSelect';
 
-function exampleReducer2(state, action) {
-    switch (action.type) {
-        case 'close':
-            return { open: false }
-        case 'open':
-            return { open: true, size: action.size }
-        default:
-            throw new Error('Unsupported action...')
-    }
-}
-
-const refreshPage = ()=>{
+const refreshPage = () => {
     window.location.reload();
 }
 
@@ -53,11 +35,6 @@ export default function CurriculumVitaeDetail() {
     }, [])
 
 
-    const [state, dispatch] = React.useReducer(exampleReducer2, {
-        open: false,
-        size: undefined,
-    })
-    const { open, size } = state
 
     const initialValuesEducation = {
         universityName: "",
@@ -75,6 +52,38 @@ export default function CurriculumVitaeDetail() {
         graduatedDate: Yup.string(),
         curriculumVitaeId: Yup.number()
     })
+
+
+    const initialValuesExperience = {
+        companyName: "",
+        positionName: "",
+        startedDate: "",
+        quitDate: "",
+        curriculumVitaeId: ""
+    }
+    const schemaExperience = Yup.object({
+        companyName: Yup.string().required("Şirket adı eklenmelidir"),
+        positionName: Yup.string().required("Çalışılan pozisyon adı eklenmelidir"),
+        startedDate: Yup.string().required("İşe başlama zamanı eklenmelidir"),
+        quitDate: Yup.string(),
+        curriculumVitaeId: Yup.number()
+    })
+
+    const initialValuesLanguage = {
+        languageName: "",
+        languageLevel: "",
+        curriculumVitaeId: ""
+    }
+    const schemaLanguage = Yup.object({
+        languageName: Yup.string().required("Dil eklenmeli"),
+        languageLevel: Yup.number().required("Dil seviyesi eklenmeli"),
+        curriculumVitaeId: Yup.number()
+    })
+
+    const [openEducation, setOpenEducation] = useState(false)
+    const [openExperience, setOpenExperience] = useState(false)
+    const [openLanguage, setOpenLanguage] = useState(false)
+
     return (
         <div>
             <Row className="mt-5">
@@ -120,16 +129,16 @@ export default function CurriculumVitaeDetail() {
                                 <div className="col-md-6">
                                     <CardTitle style={{ textAlign: "left", fontSize: "1.5em" }}>
                                         Eğitim Bilgileri
-                                        <Button onClick={() => dispatch({ type: 'open', size: 'tiny' })}>+</Button>
+                                        <Button onClick={() => setOpenEducation(true)}>+</Button>
                                     </CardTitle>
                                     <Formik initialValues={initialValuesEducation} validationSchema={schemaEducation}
                                         onSubmit={(values) => {
                                             let candidateEducationModel = {
                                                 universityName: values.universityName,
                                                 departmentName: values.departmentName,
-                                                degree:{
+                                                degree: {
                                                     id: values.degreeId
-                                                }, 
+                                                },
                                                 startedDate: values.startedDate,
                                                 graduatedDate: values.graduatedDate,
                                                 curriculumVitaeId: curriculumVitaeId
@@ -146,14 +155,14 @@ export default function CurriculumVitaeDetail() {
                                         handleChange={(change) => console.log(change)}
                                     >
 
-                                        
-                                            <Modal
-                                                size={size}
-                                                open={open}
-                                                onClose={() => dispatch({ type: 'close' })}
-                                            >
-                                                <Modal.Header>Eğitim Bilgisi Ekle</Modal.Header>
-                                                <Form className="ui form">
+
+                                        <Modal
+                                            onClose={() => setOpenEducation(false)}
+                                            onOpen={() => setOpenEducation(true)}
+                                            open={openEducation}
+                                        >
+                                            <Modal.Header>Eğitim Bilgisi Ekle</Modal.Header>
+                                            <Form className="ui form">
                                                 <Modal.Content>
 
                                                     <HrmsTextInput className="form-control" name="universityName" placeholder="Üniversite" />
@@ -171,16 +180,16 @@ export default function CurriculumVitaeDetail() {
 
                                                 </Modal.Content>
                                                 <Modal.Actions>
-                                                    <Button onClick={() => dispatch({ type: 'close' })}>
+                                                    <Button>
                                                         İptal
                                                     </Button>
                                                     <Button type="submit">
                                                         Ekle
                                                     </Button>
                                                 </Modal.Actions>
-                                                </Form>
-                                            </Modal>
-                                        
+                                            </Form>
+                                        </Modal>
+
                                     </Formik>
                                     <hr style={{ marginTop: "1rem", marginBottom: "1rem" }} />
                                     {
@@ -194,7 +203,59 @@ export default function CurriculumVitaeDetail() {
                                     }
                                 </div>
                                 <div className="col-md-6">
-                                    <CardTitle style={{ textAlign: "left", fontSize: "1.5em" }}>İş Deneyimi</CardTitle>
+                                    <CardTitle style={{ textAlign: "left", fontSize: "1.5em" }}>
+                                        İş Deneyimi
+                                        <Button onClick={() => setOpenExperience(true)}>+</Button>
+                                    </CardTitle>
+                                    <Formik initialValues={initialValuesExperience} validationSchema={schemaExperience}
+                                        onSubmit={(values) => {
+                                            let candidateExperienceModel = {
+                                                companyName: values.companyName,
+                                                positionName: values.positionName,
+                                                startedDate: values.startedDate,
+                                                quitDate: values.quitDate,
+                                                curriculumVitaeId: curriculumVitaeId
+                                            }
+
+                                            let candidateExperienceService = new CandidateExperienceService();
+                                            candidateExperienceService.add(candidateExperienceModel).then((result) => {
+                                                toast.success("İş deneyimi bilgisi eklendi.")
+                                                setTimeout(() => {
+                                                    refreshPage()
+                                                }, 2000);
+                                            })
+                                        }}
+                                        handleChange={(change) => console.log(change)}
+                                    >
+
+
+                                        <Modal
+                                            onClose={() => setOpenExperience(false)}
+                                            onOpen={() => setOpenExperience(true)}
+                                            open={openExperience}
+                                        >
+                                            <Modal.Header>İş Deneyimi Ekle</Modal.Header>
+                                            <Form className="ui form">
+                                                <Modal.Content>
+
+                                                    <HrmsTextInput className="form-control" name="companyName" placeholder="Şirket" />
+                                                    <HrmsTextInput className="form-control" name="positionName" placeholder="Pozisyon" />
+                                                    <HrmsTextInput className="form-control" name="startedDate" placeholder="Başlangıç tarihi" />
+                                                    <HrmsTextInput className="form-control" name="quitDate" placeholder="Ayrılma Tarihi" />
+
+                                                </Modal.Content>
+                                                <Modal.Actions>
+                                                    <Button>
+                                                        İptal
+                                                    </Button>
+                                                    <Button type="submit">
+                                                        Ekle
+                                                    </Button>
+                                                </Modal.Actions>
+                                            </Form>
+                                        </Modal>
+
+                                    </Formik>
                                     <hr style={{ marginTop: "1rem", marginBottom: "1rem" }} />
                                     {
                                         curriculumVitae.candidateExperiences?.map((candidateExperience) => (
@@ -209,7 +270,62 @@ export default function CurriculumVitaeDetail() {
                             </Row>
                             <Row>
                                 <div className="col-md-6">
-                                    <CardTitle style={{ textAlign: "left", fontSize: "1.5em" }}>Diller</CardTitle>
+                                    <CardTitle style={{ textAlign: "left", fontSize: "1.5em" }}>
+                                        Diller
+                                        <Button onClick= {() => setOpenLanguage(true)}>+</Button>
+                                    </CardTitle>
+                                    <Formik initialValues={initialValuesLanguage} validationSchema={schemaLanguage}
+                                        onSubmit={(values) => {
+                                            let candidateLanguageModel = {
+                                                languageName: values.languageName,
+                                                languageLevel: values.languageLevel,
+                                                curriculumVitaeId: curriculumVitaeId
+                                            }
+
+                                            let candidateLanguageService = new CandidateLanguageService();
+                                            candidateLanguageService.add(candidateLanguageModel).then((result) => {
+                                                toast.success("Dil bilgisi eklendi.")
+                                                setTimeout(() => {
+                                                    refreshPage()
+                                                }, 2000);
+                                            })
+                                        }}
+                                        handleChange={(change) => console.log(change)}
+                                    >
+
+
+                                        <Modal
+                                            onClose={() => setOpenLanguage(false)}
+                                            onOpen={() => setOpenLanguage(true)}
+                                            open={openLanguage}
+                                        >
+                                            <Modal.Header>Dil Bilgisi Ekle</Modal.Header>
+                                            <Form className="ui form">
+                                                <Modal.Content>
+
+                                                    <HrmsTextInput className="form-control" name="languageName" placeholder="Dil" />
+                                                    <HrmsSelect as="select" name="languageLevel">
+                                                        <option value="" disabled>Seviye</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </HrmsSelect>
+
+                                                </Modal.Content>
+                                                <Modal.Actions>
+                                                    <Button>
+                                                        İptal
+                                                    </Button>
+                                                    <Button type="submit">
+                                                        Ekle
+                                                    </Button>
+                                                </Modal.Actions>
+                                            </Form>
+                                        </Modal>
+
+                                    </Formik>
                                     <hr style={{ marginTop: "1rem", marginBottom: "1rem" }} />
                                     {
                                         curriculumVitae.candidateLanguages?.map((candidateLanguage) => (
