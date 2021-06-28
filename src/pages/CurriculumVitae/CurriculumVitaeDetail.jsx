@@ -11,7 +11,9 @@ import CurriculumVitaeService from '../../services/curriculumVitaeService';
 import CandidateEducationService from '../../services/candidateEducationService'
 import CandidateExperienceService from '../../services/candidateExperienceService'
 import CandidateLanguageService from '../../services/candidateLanguageService'
+import CandidateSkillService from '../../services/candidateSkillService';
 import DegreeService from '../../services/degreeService'
+import SkillService from '../../services/skillService';
 import { toast } from 'react-toastify';
 import HrmsTextInput from '../../utilities/customFormControls/HrmsTextInput';
 import HrmsSelect from '../../utilities/customFormControls/HrmsSelect';
@@ -25,6 +27,7 @@ export default function CurriculumVitaeDetail() {
 
     const [curriculumVitae, setCurriculumVitae] = useState({})
     const [degrees, setDegrees] = useState([])
+    const [skills, setSkills] = useState([])
 
     useEffect(() => {
         let curriculumVitaeService = new CurriculumVitaeService()
@@ -32,6 +35,9 @@ export default function CurriculumVitaeDetail() {
 
         let degreeService = new DegreeService()
         degreeService.getDegrees().then((result) => setDegrees(result.data.data))
+
+        let skillService = new SkillService()
+        skillService.getSkills().then((result) => setSkills(result.data.data))
     }, [])
 
 
@@ -80,9 +86,20 @@ export default function CurriculumVitaeDetail() {
         curriculumVitaeId: Yup.number()
     })
 
+    const initialValuesSkill = {
+        skillId: "",
+        curriculumVitaeId: "",
+    }
+
+    const schemaSkill = Yup.object({
+        skillId: Yup.string().required("Yetenek seçilmelidir"),
+        curriculumVitaeId: Yup.number()
+    })
+
     const [openEducation, setOpenEducation] = useState(false)
     const [openExperience, setOpenExperience] = useState(false)
     const [openLanguage, setOpenLanguage] = useState(false)
+    const [openSkill, setOpenSkill] = useState(false)
 
     return (
         <div>
@@ -272,7 +289,7 @@ export default function CurriculumVitaeDetail() {
                                 <div className="col-md-6">
                                     <CardTitle style={{ textAlign: "left", fontSize: "1.5em" }}>
                                         Diller
-                                        <Button onClick= {() => setOpenLanguage(true)}>+</Button>
+                                        <Button onClick={() => setOpenLanguage(true)}>+</Button>
                                     </CardTitle>
                                     <Formik initialValues={initialValuesLanguage} validationSchema={schemaLanguage}
                                         onSubmit={(values) => {
@@ -343,7 +360,60 @@ export default function CurriculumVitaeDetail() {
                                     }
                                 </div>
                                 <div className="col-md-6">
-                                    <CardTitle style={{ textAlign: "left", fontSize: "1.5em" }}>Yetenekler</CardTitle>
+                                    <CardTitle style={{ textAlign: "left", fontSize: "1.5em" }}>
+                                        Yetenekler
+                                        <Button onClick={() => setOpenSkill(true)}>+</Button>
+                                    </CardTitle>
+                                    <Formik initialValues={initialValuesSkill} validationSchema={schemaSkill}
+                                        onSubmit={(values) => {
+                                            let candidateSkillModel = {
+                                                skill: {
+                                                    id: values.skillId
+                                                },
+                                                curriculumVitaeId: curriculumVitaeId
+                                            }
+
+                                            let candidateSkillService = new CandidateSkillService();
+                                            candidateSkillService.add(candidateSkillModel).then((result) => {
+                                                toast.success("Yetenek eklendi.")
+                                                setTimeout(() => {
+                                                    refreshPage()
+                                                }, 2000);
+                                            })
+                                        }}
+                                        handleChange={(change) => console.log(change)}
+                                    >
+
+
+                                        <Modal
+                                            onClose={() => setOpenSkill(false)}
+                                            onOpen={() => setOpenSkill(true)}
+                                            open={openSkill}
+                                        >
+                                            <Modal.Header>Eğitim Bilgisi Ekle</Modal.Header>
+                                            <Form className="ui form">
+                                                <Modal.Content>
+                                                    <HrmsSelect as="select" name="skillId">
+                                                        <option value="" disabled>Yetenek</option>
+                                                        {skills.map((skill) => (
+                                                            <option key={skill.id} value={skill.id}>
+                                                                {skill.skillName}
+                                                            </option>
+                                                        ))}
+                                                    </HrmsSelect>
+                                                </Modal.Content>
+                                                <Modal.Actions>
+                                                    <Button>
+                                                        İptal
+                                                    </Button>
+                                                    <Button type="submit">
+                                                        Ekle
+                                                    </Button>
+                                                </Modal.Actions>
+                                            </Form>
+                                        </Modal>
+
+                                    </Formik>
                                     <hr style={{ marginTop: "1rem", marginBottom: "1rem" }} />
                                     {
                                         curriculumVitae.candidateSkills?.map((candidateSkill) => (
@@ -358,15 +428,6 @@ export default function CurriculumVitaeDetail() {
                     </Card>
                 </Col>
             </Row>
-
-
-
-
-
-
-
-
-
         </div>
     )
 }
